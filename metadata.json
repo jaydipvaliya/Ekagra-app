@@ -1,0 +1,6 @@
+
+{
+  "name": "Ekagra",
+  "description": "Ekagra is a premium productivity sanctuary designed for single-pointed focus. Features an advanced Pomodoro system, Eisenhower prioritization, habit tracking, and immersive focus soundscapes.",
+  "requestFramePermissions": ["microphone"]
+}
