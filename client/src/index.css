@@ -1,0 +1,616 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════
+   CONCEPTUAL SKETCH DESIGN SYSTEM
+   Ekagra — Hand-drawn productivity aesthetic
+   ═══════════════════════════════════════════════ */
+
+:root {
+  --bg-main: #f5f0e8;
+  --bg-card: #faf7f1;
+  --text-main: #2c2420;
+  --text-secondary: #7a7068;
+  --border-color: #d0c8bb;
+  --border-light: #e4ded4;
+  --accent: #c0392b;
+  --accent-soft: rgba(192, 57, 43, 0.08);
+  --ruled: #e0d9ce;
+  --warm-shadow: rgba(44, 36, 32, 0.08);
+}
+
+.dark {
+  --bg-main: #2a2520;
+  --bg-card: #332e28;
+  --text-main: #e8e0d4;
+  --text-secondary: #9a8e80;
+  --border-color: #4a443c;
+  --border-light: #3d372f;
+  --accent: #e74c3c;
+  --accent-soft: rgba(231, 76, 60, 0.1);
+  --ruled: #3a342c;
+  --warm-shadow: rgba(232, 224, 212, 0.06);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: 'Architects Daughter', cursive;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* ── Paper Texture Background ────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.25;
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(212, 165, 116, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(192, 57, 43, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 80%, rgba(180, 160, 130, 0.08) 0%, transparent 50%);
+}
+
+/* ── Sketch Border ───────────────────────────── */
+.sketch-border {
+  border: 1.5px solid var(--border-color);
+}
+
+/* ── Crosshatch Backgrounds ──────────────────── */
+.crosshatch-bg {
+  position: relative;
+}
+
+.crosshatch-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(45deg,
+      transparent,
+      transparent 4px,
+      rgba(44, 36, 32, 0.03) 4px,
+      rgba(44, 36, 32, 0.03) 5px);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.dark .crosshatch-bg::before {
+  background:
+    repeating-linear-gradient(45deg,
+      transparent,
+      transparent 4px,
+      rgba(232, 224, 212, 0.02) 4px,
+      rgba(232, 224, 212, 0.02) 5px);
+}
+
+/* ── Ruled Lines (Notebook Paper) ────────────── */
+.ruled-bg {
+  background-image:
+    repeating-linear-gradient(to bottom,
+      transparent,
+      transparent 31px,
+      var(--ruled) 31px,
+      var(--ruled) 32px);
+  background-size: 100% 32px;
+}
+
+/* ── Pencil Divider ──────────────────────────── */
+.sketch-divider {
+  border: none;
+  height: 1.5px;
+  background:
+    linear-gradient(90deg,
+      transparent 0%,
+      var(--border-color) 8%,
+      var(--border-color) 92%,
+      transparent 100%);
+  opacity: 0.5;
+}
+
+/* ── Ink Shadow (soft, warm) ─────────────────── */
+.ink-shadow {
+  box-shadow:
+    2px 3px 0px var(--warm-shadow),
+    0 1px 3px var(--warm-shadow);
+}
+
+.ink-shadow-lg {
+  box-shadow:
+    3px 4px 0px var(--warm-shadow),
+    0 2px 8px var(--warm-shadow);
+}
+
+/* ── Hand-drawn Underline ────────────────────── */
+.sketch-underline {
+  text-decoration: none;
+  background-image:
+    linear-gradient(90deg,
+      var(--accent) 0%,
+      var(--accent) 33%,
+      transparent 33%,
+      transparent 36%,
+      var(--accent) 36%,
+      var(--accent) 100%);
+  background-position: 0 100%;
+  background-size: 100% 2px;
+  background-repeat: no-repeat;
+  padding-bottom: 3px;
+}
+
+/* ── Scribble Underline ──────────────────────── */
+.scribble-underline {
+  text-decoration: none;
+  position: relative;
+}
+
+.scribble-underline::after {
+  content: '';
+  position: absolute;
+  left: -2%;
+  right: -2%;
+  bottom: -4px;
+  height: 2px;
+  background: var(--border-color);
+  opacity: 0.6;
+  border-radius: 2px;
+}
+
+/* ── Annotation Style (margin notes) ─────────── */
+.annotation {
+  font-family: 'Caveat', cursive;
+  font-size: 0.85rem;
+  color: var(--accent);
+  transform: rotate(-1.5deg);
+  opacity: 0.7;
+  display: inline-block;
+}
+
+.annotation::before {
+  content: '← ';
+}
+
+/* ── Sketch Card ─────────────────────────────── */
+.sketch-card {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-color);
+  border-radius: 3px;
+  position: relative;
+}
+
+/* ── Notebook Page (with margin line) ────────── */
+.notebook-page {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-color);
+  border-radius: 3px;
+  border-left: 3px solid var(--accent);
+  position: relative;
+}
+
+.notebook-page::before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(192, 57, 43, 0.12);
+}
+
+/* ── Sketch Input (ruled line style) ─────────── */
+.sketch-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid var(--border-color);
+  border-radius: 0;
+  padding: 8px 4px;
+  font-family: 'Architects Daughter', cursive;
+  color: var(--text-main);
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.sketch-input:focus {
+  border-bottom-color: var(--accent);
+}
+
+.sketch-input::placeholder {
+  color: var(--border-color);
+  font-style: italic;
+}
+
+/* ── Sketch Button ───────────────────────────── */
+.sketch-btn {
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  font-size: 1.15rem;
+  background: var(--accent);
+  color: #fff;
+  border: 1.5px solid color-mix(in srgb, var(--accent), #000 15%);
+  border-radius: 3px;
+  padding: 10px 24px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 2px 2px 0px rgba(44, 36, 32, 0.12);
+  position: relative;
+  letter-spacing: 0.02em;
+}
+
+.sketch-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px rgba(44, 36, 32, 0.15);
+}
+
+.sketch-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px rgba(44, 36, 32, 0.12);
+}
+
+.sketch-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.sketch-btn-outline {
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  font-size: 1.1rem;
+  background: transparent;
+  color: var(--text-main);
+  border: 1.5px solid var(--border-color);
+  border-radius: 3px;
+  padding: 10px 24px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.sketch-btn-outline:hover {
+  border-color: var(--text-main);
+  background: rgba(44, 36, 32, 0.03);
+}
+
+/* ── Hand-drawn Checkbox ─────────────────────── */
+.sketch-checkbox {
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+  flex-shrink: 0;
+  background: transparent;
+}
+
+.sketch-checkbox:hover {
+  border-color: var(--text-secondary);
+}
+
+.sketch-checkbox.checked {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.sketch-checkbox.checked::after {
+  content: '✓';
+  font-family: 'Caveat', cursive;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+}
+
+/* ── Toggle Switch (sketch style) ────────────── */
+.sketch-toggle {
+  width: 42px;
+  height: 22px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 3px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: transparent;
+}
+
+.sketch-toggle.active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.sketch-toggle .toggle-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  background: var(--border-color);
+  border-radius: 2px;
+  transition: all 0.2s ease;
+}
+
+.sketch-toggle.active .toggle-knob {
+  left: 22px;
+  background: var(--accent);
+}
+
+/* ── Custom Scrollbar ────────────────────────── */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 1px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* ── Range Slider (pencil track) ─────────────── */
+input[type="range"].sketch-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 2px;
+  background: var(--border-color);
+  border-radius: 0;
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="range"].sketch-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  background: var(--text-main);
+  border: 2px solid var(--bg-card);
+  border-radius: 2px;
+  cursor: pointer;
+  box-shadow: 1px 1px 0px rgba(44, 36, 32, 0.1);
+}
+
+input[type="range"].sketch-range::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: var(--text-main);
+  border: 2px solid var(--bg-card);
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+/* ── Animations ──────────────────────────────── */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s ease both;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s ease both;
+}
+
+/* ── Sketch Loading Spinner ──────────────────── */
+@keyframes sketch-spin {
+  0% {
+    stroke-dashoffset: 180;
+    transform: rotate(0deg);
+  }
+
+  50% {
+    stroke-dashoffset: 60;
+  }
+
+  100% {
+    stroke-dashoffset: 180;
+    transform: rotate(360deg);
+  }
+}
+
+.sketch-spinner circle {
+  fill: none;
+  stroke: var(--text-secondary);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-dasharray: 180;
+  animation: sketch-spin 2s ease-in-out infinite;
+}
+
+/* ── Margin Line (sidebar right edge) ────────── */
+.margin-line {
+  position: relative;
+}
+
+.margin-line::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background:
+    linear-gradient(to bottom,
+      transparent 0%,
+      rgba(192, 57, 43, 0.15) 5%,
+      rgba(192, 57, 43, 0.15) 95%,
+      transparent 100%);
+}
+
+/* ── Focus styles ────────────────────────────── */
+input:focus,
+button:focus {
+  outline: none;
+}
+
+input:focus-visible,
+button:focus-visible {
+  outline: 1.5px dashed var(--accent);
+  outline-offset: 2px;
+}
+
+/* ── Selection ───────────────────────────────── */
+::selection {
+  background: rgba(192, 57, 43, 0.12);
+  color: var(--text-main);
+}
+
+/* ── Wobble class for hand-drawn feel ────────── */
+.sketch-wobble {
+  border-radius: 3px;
+  transform: rotate(-0.3deg);
+}
+
+/* ── Timer specific: hand-drawn circle ───────── */
+.timer-ring-bg {
+  fill: none;
+  stroke: var(--border-light);
+  stroke-width: 1;
+}
+
+.timer-ring-progress {
+  fill: none;
+  stroke: var(--text-main);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s ease;
+}
+
+.timer-ring-dashes {
+  fill: none;
+  stroke: var(--border-color);
+  stroke-width: 0.5;
+  stroke-dasharray: 2 8;
+}
+
+/* ── Play button special styling ─────────────── */
+.play-btn {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid var(--text-main);
+  background: var(--bg-card);
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 2px 2px 0px var(--warm-shadow);
+}
+
+.play-btn:hover {
+  background: var(--text-main);
+  color: var(--bg-card);
+  transform: scale(1.05);
+}
+
+.play-btn:active {
+  transform: scale(0.95);
+  box-shadow: 1px 1px 0px var(--warm-shadow);
+}
+
+.dark .play-btn {
+  border-color: var(--text-main);
+  background: var(--bg-card);
+  color: var(--text-main);
+}
+
+.dark .play-btn:hover {
+  background: var(--text-main);
+  color: var(--bg-card);
+}
+
+/* ── Small icon button ───────────────────────── */
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-color);
+  background: transparent;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.icon-btn:hover {
+  border-color: var(--text-main);
+  color: var(--text-main);
+}
+
+.icon-btn:active {
+  transform: scale(0.92);
+}
+
+/* ── Stat card ───────────────────────────────── */
+.stat-card {
+  background: transparent;
+  border: 1.5px solid var(--border-light);
+  border-radius: 3px;
+  text-align: center;
+  padding: 12px 8px;
+  transition: border-color 0.2s;
+}
+
+.stat-card:hover {
+  border-color: var(--border-color);
+}
+
+/* ── Quote card left bar ─────────────────────── */
+.quote-bar {
+  border-left: 3px solid var(--accent);
+  padding-left: 20px;
+}
+
+/* ── Chalkboard (dark inverse panel) ─────────── */
+.chalkboard {
+  background: var(--text-main);
+  color: var(--bg-main);
+  border: 1.5px solid var(--text-main);
+  border-radius: 3px;
+}
+
+.dark .chalkboard {
+  background: var(--text-main);
+  color: var(--bg-main);
+  border-color: var(--text-main);
+}
